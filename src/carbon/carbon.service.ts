@@ -11,4 +11,8 @@ export class CarbonService {
     async listAll(): Promise<CarbonCertificate[]> {
         return this.carbonCertificateModel.find({ owner: { $exists: false } });
     }
+
+    async findByOwner(userId: string): Promise<CarbonCertificate[]> {
+        return await this.carbonCertificateModel.find({ owner: userId });
+    }
 }

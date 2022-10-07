@@ -1,7 +1,9 @@
-import { Controller, forwardRef, Get, Inject, Patch } from '@nestjs/common';
+import { Controller, forwardRef, Get, Inject, Patch, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/user/user.guard';
 import { CarbonService } from './carbon.service';
-
+import { User } from 'src/user/user.decorator';
 @Controller('carbon')
+@UseGuards(AuthGuard)
 export class CarbonController {
     constructor(
         private carbonCertificateService: CarbonService) { }
@@ -13,8 +15,8 @@ export class CarbonController {
 
 
     @Get('me')
-    getCarbonByOwner(): any[] {
-        return []
+    async getCarbonByOwner(@User() { userId }: { userId: string }) {
+        return await this.carbonCertificateService.findByOwner(userId)
     }
 
 
