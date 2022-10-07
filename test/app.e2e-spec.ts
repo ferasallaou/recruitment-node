@@ -59,7 +59,7 @@ describe('AppController (e2e)', () => {
     });
 
 
-    it('allow changing ownership of a certificate unless it belongs to the user', async () => {
+    it('allows changing ownership of a certificate unless it belongs to the user', async () => {
       const getUserCertificates = await request(app.getHttpServer())
         .get('/carbon/me')
         .set('Authorization', TOKEN)
