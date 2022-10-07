@@ -22,4 +22,5 @@ export class UserService {
     async generateToken(userId: ObjectId) {
         return { accessToken: jwt.sign({ userId }, process.env.SECRET ?? '') }
     }
+
 }

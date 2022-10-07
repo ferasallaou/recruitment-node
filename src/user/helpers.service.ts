@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
@@ -34,4 +34,8 @@ export class HelpersService {
         return this.userModel.create(usersArray)
     }
 
+    async getRandom() {
+        const randomUsers = await this.userModel.find({}).limit(5)
+        return randomUsers.map(user => user._id)
+    }
 }

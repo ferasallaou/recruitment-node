@@ -9,11 +9,6 @@ export class UserController {
         private userService: UserService,
         private helpersService: HelpersService) { }
 
-    async onModuleInit() {
-        await this.helpersService.seed()
-    }
-
-
     @Post('/login')
     async login(@Body() userData: UserData): Promise<any> {
         return await this.userService.findOne(userData)
