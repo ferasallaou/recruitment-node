@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { ConfigModule } from '@nestjs/config';
       user: process.env.DATABASE_USER ?? '',
       pass: process.env.DATABASE_PASS ?? '',
       dbName: process.env.DATABASE_NAME ?? ''
-    })],
+    }),
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
