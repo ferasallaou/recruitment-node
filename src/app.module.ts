@@ -16,6 +16,6 @@ import { UserController } from './user/user.controller';
     }),
     CarbonModule,
     UserModule],
-  controllers: [AppController, UserController],
+  controllers: [AppController],
 })
 export class AppModule { }
