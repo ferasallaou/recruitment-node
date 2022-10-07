@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CarbonModule } from './carbon/carbon.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -13,7 +15,7 @@ import { ConfigModule } from '@nestjs/config';
       dbName: process.env.DATABASE_NAME ?? ''
     }),
     CarbonModule,
-  ],
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,10 +1,10 @@
-import { Controller, Get, Patch } from '@nestjs/common';
+import { Controller, forwardRef, Get, Inject, Patch } from '@nestjs/common';
 import { CarbonService } from './carbon.service';
 
 @Controller('carbon')
 export class CarbonController {
-    constructor(private carbonCertificateService: CarbonService) { }
-
+    constructor(
+        private carbonCertificateService: CarbonService) { }
 
     @Get('')
     async get() {
