@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { CarbonModule } from './carbon/carbon.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
