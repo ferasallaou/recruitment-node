@@ -9,5 +9,5 @@ export type CarbonCertificate = {
 export enum CertificateStatus {
     AVAILABLE = 'AVAILABLE',
     OWNED = 'OWNED',
-    transfereed = 'TRANSFERRED'
+    TRANSFERRED = 'TRANSFERRED'
 }

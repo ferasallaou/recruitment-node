@@ -1,4 +1,4 @@
-import { Controller, forwardRef, Get, Inject, Patch, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/user/user.guard';
 import { CarbonService } from './carbon.service';
 import { User } from 'src/user/user.decorator';
@@ -20,9 +20,13 @@ export class CarbonController {
     }
 
 
-    @Patch('transfer')
-    transferCertificate() {
-        return true
+    @Patch('transfer/:certificateId/:userId')
+    async transferCertificate(
+        @Param('userId') newUserId: string,
+        @Param('certificateId') certificateId: string,
+        @User() { userId: ownerId }: { userId: string }
+    ) {
+        return await this.carbonCertificateService.transfer(certificateId, newUserId, ownerId)
     }
 
 

@@ -21,7 +21,6 @@ export class HelpersService {
         if (isSeeded > 0) return
 
         const certificatesArray = []
-        const certicationStatusArray = Object.values(CertificateStatus)
 
         const getUsers = await this.userService.getRandom()
 
@@ -30,7 +29,7 @@ export class HelpersService {
             let getRandomUser = i % 20 === 0 ? getUsers.pop() : ''
             certificatesArray.push(new this.carbonCertificates({
                 country: faker.address.country(),
-                status: certicationStatusArray[Math.floor(Math.random() * 3)],
+                status: i % 20 === 0 ? CertificateStatus.OWNED : CertificateStatus.AVAILABLE,
                 owner: i % 20 === 0 ? getRandomUser : undefined
             }))
         }
