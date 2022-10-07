@@ -1,32 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { User, UserDocument, UserSchema } from './user.schema';
+import { Model, ObjectId } from 'mongoose';
+import { User, UserDocument } from './user.schema';
+import { UserData } from './user.model';
+import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcrypt';
-import { faker } from '@faker-js/faker';
-
-
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private catModel: Model<UserDocument>) { }
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
+    async findOne({ email, password }: UserData) {
+        const user = await this.userModel.findOne({ email })
+        if (!user) throw new NotFoundException('Wrong Credentials!')
 
-    async seed() {
-        const usersArray = []
+        const passwordMatched = await bcrypt.compare(password, user.password)
+        if (!passwordMatched) throw new NotFoundException('Wrong Credentials!')
 
-        // Just for dev purpose
-        const PASSWORD = faker.random.alphaNumeric(10)
-        console.log(`>>>> You can use this password ${PASSWORD} to login with all users :) `)
+        return this.generateToken(user._id)
+    }
 
-        // TODO: Use a seeder module!
-        for (let i = 0; i < 10; i++) {
-            usersArray.push(new this.catModel({
-                name: faker.name.fullName(),
-                email: faker.internet.email(),
-                password: await bcrypt.hash(faker.random.alphaNumeric(), 10)
-            }))
-        }
-
-        return this.catModel.create(usersArray)
+    async generateToken(userId: ObjectId) {
+        return { accessToken: jwt.sign({ userId }, process.env.SECRET ?? '') }
     }
 }
